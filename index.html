@@ -66,7 +66,42 @@
 						}
 					}
 				});
+				           AFRAME.registerComponent("hide-restricted-entity", {
+                    schema: {
+                        userids: { type: "array" },
+                        enabled: { type: "boolean", default: true }
+                    },
+
+                    init: function() {
+                        altspace.getUser().then((function(user) {
+                            this.user = user;
+                        }).bind(this));
+                    },
+
+                    tick: function() {
+                        var isWhitelistedUser = this.user && (!this.data.enabled || this.user.isModerator || (this.data.userids.length > 0 && this.data.userids.indexOf(this.user.userId) >= 0));
+                        this.el.setAttribute('visible', isWhitelistedUser);
+                    }
+                });
+				AFRAME.registerComponent("hide-restricted-entity", {
+                    schema: {
+                        userids: { type: "array" },
+                        enabled: { type: "boolean", default: true }
+                    },
+
+                    init: function() {
+                        altspace.getUser().then((function(user) {
+                            this.user = user;
+                        }).bind(this));
+                    },
+
+                    tick: function() {
+                        var isWhitelistedUser = this.user && (!this.data.enabled || this.user.isModerator || (this.data.userids.length > 0 && this.data.userids.indexOf(this.user.userId) >= 0));
+                        this.el.setAttribute('visible', isWhitelistedUser);
+                    }
+                });
 		</script>
+		
 
  
   <body>
